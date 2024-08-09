@@ -31,4 +31,4 @@ The following environment variables need to be set:
 ### Building the Docker Image
 
 ```sh
-docker build -t sinatra-app .
+docker build -t microservice-connection-checker .
