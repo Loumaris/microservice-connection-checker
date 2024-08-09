@@ -9,8 +9,19 @@ class CheckApp < Sinatra::Base
     {
       message: 'Welcome to the Sinatra App!',
       routes: {
-        check_db: '/check_db',
-        check_redis: '/check_redis'
+        check_db: '/check/db',
+        check_redis: '/check/redis'
+      }
+    }.to_json
+  end
+
+  get '/check' do
+    content_type :json
+    {
+      message: 'Welcome to the Sinatra App!',
+      routes: {
+        check_db: '/check/db',
+        check_redis: '/check/redis'
       }
     }.to_json
   end
@@ -22,7 +33,8 @@ class CheckApp < Sinatra::Base
         user: ENV['POSTGRESQL_USERNAME'],
         password: ENV['POSTGRESQL_PASSWORD'],
         host: ENV['POSTGRESQL_ADDRESS'],
-        port: ENV['POSTGRESQL_PORT']
+        port: ENV['POSTGRESQL_PORT'] || 5432,
+        connect_timeout: ENV['POSTGRESQL_TIMEOUT'] || 5
       )
       connection.exec("SELECT 1")
       connection.close
